@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.book.api.domain.dao.BookDao">
+
+    <!--
+        Book 목록 조회
+    -->
+    <select id="selectBooks" resultType="Book">
+        SELECT
+        *
+        FROM BOOK
+    </select>
+
+    <!--
+        Book 건수 조회
+    -->
+    <select id="selectBookCnt" resultType="int">
+        SELECT
+            COUNT(1) AS CNT
+        FROM BOOK
+        WHERE 1 = 1
+        <if test="bookNo != null and bookNo != ''">
+            AND BOOK_NO = #{bookNo}
+        </if>
+        <if test="bookNm != null and bookNm != ''">
+            AND BOOK_NM = #{bookNm}
+        </if>
+        <if test="bookPrice != null and bookPrice != ''">
+            AND BOOK_PRICE = #{bookPrice}
+        </if>
+        <if test="bookAuthor != null and bookAuthor != ''">
+            AND BOOK_AUTHOR = #{bookAuthor}
+        </if>
+        <if test="bookPublisher != null and bookPublisher != ''">
+            AND BOOK_PUBLISHER = #{bookPublisher}
+        </if>
+        <if test="bookDesc != null and bookDesc != ''">
+            AND BOOK_DESC = #{bookDesc}
+        </if>
+    </select>
+
+    <!--
+        Book 조회
+    -->
+    <select id="selectBook" parameterType="Book" resultType="Book">
+        SELECT
+            *
+        FROM (
+            SELECT
+                *
+            FROM BOOK
+            WHERE 1 = 1
+            <if test="bookNo != null and bookNo != ''">
+                AND BOOK_NO = #{bookNo}
+            </if>
+            <if test="bookNm != null and bookNm != ''">
+                AND BOOK_NM = #{bookNm}
+            </if>
+            <if test="bookPrice != null and bookPrice != ''">
+                AND BOOK_PRICE = #{bookPrice}
+            </if>
+            <if test="bookAuthor != null and bookAuthor != ''">
+                AND BOOK_AUTHOR = #{bookAuthor}
+            </if>
+            <if test="bookPublisher != null and bookPublisher != ''">
+                AND BOOK_PUBLISHER = #{bookPublisher}
+            </if>
+            <if test="bookDesc != null and bookDesc != ''">
+                AND BOOK_DESC = #{bookDesc}
+            </if>
+            ORDER BY REG_DTS DESC
+        ) WHERE ROWNUM =  1
+    </select>
+
+    <!--
+        Book 등록
+    -->
+    <insert id="insertBook" parameterType="Book">
+        INSERT INTO BOOK
+        (
+            BOOK_NM
+            , BOOK_PRICE
+            , BOOK_AUTHOR
+            , BOOK_PUBLISHER
+            , BOOK_DESC
+            , REG_DTS
+            , REG_ID
+            , MOD_DTS
+            , MOD_ID
+        ) VALUES (
+            #{bookNm}
+            , #{bookPrice}
+            , #{bookAuthor}
+            , #{bookPublisher}
+            , #{bookDesc}
+            , CURRENT_TIMESTAMP
+            , #{regId}
+            , CURRENT_TIMESTAMP
+            , #{regId}
+        )
+    </insert>
+
+    <!--
+        Book 수정
+    -->
+    <update id="updateBook" parameterType="Book">
+        UPDATE
+            BOOK
+        SET
+            BOOK_NM = #{bookNm}
+            , BOOK_PRICE = #{bookPrice}
+            , BOOK_AUTHOR = #{bookAuthor}
+            , BOOK_PUBLISHER = #{bookPublisher}
+            , BOOK_DESC = #{bookDesc}
+            , MOD_DTS = CURRENT_TIMESTAMP
+            , MOD_ID = #{modId}
+        WHERE BOOK_NO = #{bookNo}
+    </update>
+
+    <!--
+        Book 삭제
+    -->
+    <delete id="deleteBook" parameterType="int">
+        DELETE
+        FROM BOOK
+        WHERE BOOK_NO = #{bookNo}
+    </delete>
+
+</mapper>

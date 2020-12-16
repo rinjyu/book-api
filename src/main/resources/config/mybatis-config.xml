@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <package name="com.app.book.api.domain"/>
+    </typeAliases>
+
+    <typeHandlers>
+        <typeHandler javaType="java.time.ZonedDateTime" handler="org.apache.ibatis.type.ZonedDateTimeTypeHandler"/>
+        <typeHandler javaType="java.time.LocalDateTime" handler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <typeHandler javaType="java.time.OffsetDateTime" handler="org.apache.ibatis.type.OffsetDateTimeTypeHandler"/>
+    </typeHandlers>
+
+</configuration>

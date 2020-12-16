@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.book.api.domain.dao.MemberDao">
+
+    <!--
+        MEMBER 건수 조회
+    -->
+    <select id="selectMemberCnt" resultType="int">
+        SELECT
+            COUNT(1) AS CNT
+        FROM MEMBER
+        WHERE MEM_ID = #{memId}
+        <if test="memPwd != null and memPwd != ''">
+            AND MEM_PWD = #{memPwd}
+        </if>
+    </select>
+
+    <!--
+        MEMBER 조회
+    -->
+    <select id="selectMember" parameterType="Member" resultType="Member">
+        SELECT
+            *
+        FROM MEMBER
+        WHERE MEM_ID = #{memId}
+        <if test="memPwd != null and memPwd != ''">
+            AND MEM_PWD = #{memPwd}
+        </if>
+    </select>
+</mapper>
